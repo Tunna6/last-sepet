@@ -30,7 +30,7 @@ if (localItem) {
 console.log(window.location.href)
 console.log(sepet.length)
 
-if (window.location.href == 'http://127.0.0.1:5500/index.html') {
+if (window.location.href == 'https://tunna6.github.io/last-sepet/index.html') {
     const row = document.querySelector('.row')
 
    // !! arama butonu
@@ -153,7 +153,7 @@ if (window.location.href == 'http://127.0.0.1:5500/index.html') {
         row.append(col)
 
     })
-} else if (window.location.href == 'http://127.0.0.1:5500/sepet.html') {
+} else if (window.location.href == 'https://tunna6.github.io/last-sepet/sepet.html') {
     const container = document.querySelector('.container')
 
     if (sepet.length == 0) {

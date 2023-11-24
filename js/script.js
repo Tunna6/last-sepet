@@ -5,11 +5,20 @@ const span = document.querySelector('#span')
 let sepet = []
 
 let localItem = localStorage.getItem('sepet')
+let toplamSepet = 0
 
 if (localItem) {
     sepet = JSON.parse(localItem)
     // console.log(sepet)
-    span.textContent = sepet.length
+    sepet.forEach((urun) => {
+        toplamSepet += urun.quantity
+    })
+
+
+
+    span.textContent = toplamSepet
+
+
 }
 // localStorage.clear()
 // console.log(urunler)
@@ -19,6 +28,38 @@ console.log(sepet.length)
 
 if (window.location.href == 'http://127.0.0.1:5500/index.html') {
     const row = document.querySelector('.row')
+
+   // !! arama butonu
+
+   const input = document.getElementById('input')
+
+   input.addEventListener('input', (e) => {
+        console.log(e.target.value.toLowerCase());   
+        let kullanıcıDeger = e.target.value.toLowerCase()
+
+        const col = document.querySelectorAll('.col-12')
+
+        for (let i = 0; i < col.length; i++) {
+            // console.log([i].firstChild.firstChild.nextSibling.firstChild.textContent);
+            let urunAdı = col[i].firstChild.firstChild.nextSibling.firstChild.textContent.toLowerCase()
+
+            console.log(urunAdı.indexOf(kullanıcıDeger));
+           
+            if (urunAdı.indexOf(kullanıcıDeger) != -1) {
+                col[i].style.display = 'flex'
+            } else {
+                col[i].style.display = 'none'
+            }
+        }
+
+
+
+        
+        // let urunler = urunler.filter((urun) => {
+        //     return urun.isim.toLowerCase().includes(kullanıcıDeger)
+        // })
+   })
+
 
     urunler.forEach((urun) => {
 
@@ -84,8 +125,12 @@ if (window.location.href == 'http://127.0.0.1:5500/index.html') {
                 sepet.push(urun)
             }
 
+            let toplam = 0
+            sepet.forEach(Element => {
+                toplam += Element.quantity
+            })
             localStorage.setItem('sepet', JSON.stringify(sepet))
-            span.textContent = sepet.length
+            span.textContent = toplam
         })
 
         cardBody.append(baslik)

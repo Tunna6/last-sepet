@@ -14,9 +14,13 @@ if (localItem) {
         toplamSepet += urun.quantity
     })
 
+    if (sepet.length == 0) {
+        span.textContent = ''
+    }else {
+        span.textContent = toplamSepet
+    }
 
-
-    span.textContent = toplamSepet
+    
 
 
 }
@@ -43,9 +47,11 @@ if (window.location.href == 'http://127.0.0.1:5500/index.html') {
             // console.log([i].firstChild.firstChild.nextSibling.firstChild.textContent);
             let urunAdı = col[i].firstChild.firstChild.nextSibling.firstChild.textContent.toLowerCase()
 
+            let urunAcıklama = col[i].firstChild.firstChild.nextSibling.firstChild.nextSibling.textContent.toLocaleLowerCase()
+
             console.log(urunAdı.indexOf(kullanıcıDeger));
            
-            if (urunAdı.indexOf(kullanıcıDeger) != -1) {
+            if (urunAdı.indexOf(kullanıcıDeger) != -1  || urunAcıklama.indexOf(kullanıcıDeger) != -1) {
                 col[i].style.display = 'flex'
             } else {
                 col[i].style.display = 'none'
@@ -178,7 +184,7 @@ if (window.location.href == 'http://127.0.0.1:5500/index.html') {
 
             const price = document.createElement('p')
             let urununFiyati = urun.fiyat * urun.quantity
-            price.textContent = urununFiyati + '$'
+            price.textContent = urununFiyati.toFixed(2) + '$'
             price.style.fontWeight = 'bold'
 
             const kacTane = document.createElement('div')
@@ -201,7 +207,9 @@ if (window.location.href == 'http://127.0.0.1:5500/index.html') {
                 if (urun.quantity >= 1) {
                     urun.quantity--
                     sayi.textContent = urun.quantity
+                    price.textContent = (urun.fiyat * urun.quantity).toFixed(2) + '$'
 
+                    localStorage.setItem('sepet', JSON.stringify(sepet))
 
                     if (urun.quantity == 0) {
                         // console.log(this.parentElement.parentElement)
@@ -216,13 +224,37 @@ if (window.location.href == 'http://127.0.0.1:5500/index.html') {
                         //! LocalStorage'dan silme
 
                     }
+                    let toplam = 0
+                    sepet.forEach(Element => {
+                        toplam += Element.quantity
+                    })
+                    if (sepet.length == 0) {
+                        span.textContent = ''
+                    }else {
+                        span.textContent = toplam
+                    }
+                }
+                if (sepet.length == 0) {
+                    const h4 = document.createElement('h4')
+                    h4.textContent = 'Sepetinizde ürün bırakmadınız...'
+            
+                    container.append(h4)
                 }
             })
 
             arttirBtn.addEventListener('click', () => {
                 urun.quantity++
                 sayi.textContent = urun.quantity
+                price.textContent = (urun.fiyat * urun.quantity).toFixed(2) + '$'
 
+
+                localStorage.setItem('sepet', JSON.stringify(sepet))
+
+                let toplam = 0
+                sepet.forEach(Element => {
+                    toplam += Element.quantity
+                })
+                span.textContent = toplam
                 // urun.fiyat += urun.quantity
                 // price.textContent = urun.fiyat
 

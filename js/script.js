@@ -239,7 +239,13 @@ if (window.location.href == 'http://127.0.0.1:5500/index.html') {
                     h4.textContent = 'Sepetinizde ürün bırakmadınız...'
             
                     container.append(h4)
+                    container.removeChild(hr)
                 }
+                let toplamSepetFiyatı = 0
+                sepet.forEach((e) => {
+                toplamSepetFiyatı += e.fiyat * e.quantity
+                sepetFiyat.textContent = toplamSepetFiyatı.toFixed(2)
+                })
             })
 
             arttirBtn.addEventListener('click', () => {
@@ -257,8 +263,14 @@ if (window.location.href == 'http://127.0.0.1:5500/index.html') {
                 span.textContent = toplam
                 // urun.fiyat += urun.quantity
                 // price.textContent = urun.fiyat
+                let toplamSepetFiyatı = 0
+                sepet.forEach((e) => {
+                toplamSepetFiyatı += e.fiyat * e.quantity
+                sepetFiyat.textContent = toplamSepetFiyatı.toFixed(2)
+                })
 
             })
+            
 
             imgDiv.append(img)
 
@@ -273,7 +285,38 @@ if (window.location.href == 'http://127.0.0.1:5500/index.html') {
 
             container.append(div)
 
+            const hr = document.createElement('hr')
+
+
+            container.append(hr)
+
+
+
+
         })
+        const fiyatDiv = document.createElement('div')
+        fiyatDiv.classList.add('w-100', 'd-flex', 'justify-content-around')
+
+        let sepetFiyat = document.createElement('h3')
+
+        let toplamSepetFiyatı = 0
+        sepet.forEach((e) => {
+        toplamSepetFiyatı += e.fiyat * e.quantity
+        sepetFiyat.textContent = toplamSepetFiyatı.toFixed(2)
+        })
+
+        const sepetBtn = document.createElement('btn')
+        sepetBtn.classList.add('btn', 'btn-success', 'w-50')
+        sepetBtn.textContent = 'Satın al'
+        sepetBtn.addEventListener('click', () => {
+            localStorage.setItem('sepet', JSON.stringify(sepet))
+            window.location.href = 'http://127.0.0.1:5500/index.html'
+        })
+
+        fiyatDiv.append(sepetFiyat)
+        fiyatDiv.append(sepetBtn)
+
+        container.append(fiyatDiv)
 
     }
 
